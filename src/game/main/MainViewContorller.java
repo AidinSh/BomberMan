@@ -17,17 +17,15 @@ public class MainViewContorller extends JPanel implements KeyListener {
 
     public MainViewContorller(int row, int column) {
         JFrame jFrame = new JFrame();
-        jFrame.setSize(column * blockWidth, row * blockHeight);
+        jFrame.setSize(column * blockWidth + 20, row * blockHeight + 40);
         jFrame.add(this);
         jFrame.setVisible(true);
         jFrame.setTitle("Bomber Man");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.addKeyListener(this);
-        board = mapProvider.mapBuilder(row,column);
+        board = mapProvider.mapBuilder(row, column);
         mainGameManager.mainViewContorller = this;
         mainGameManager.onBoardCreated();
-
-
     }
 
     @Override
@@ -40,8 +38,8 @@ public class MainViewContorller extends JPanel implements KeyListener {
                 if(value == BlockTypes.Man) {
                     toDraw = imageManager.getMan();
                 } else if(value == BlockTypes.StoneBlock) {
-                    toDraw = imageManager.getBrickImage();
-                }else if(value == BlockTypes.BrikBlock) {
+                    toDraw = imageManager.getStoneImage();
+                }else if(value == BlockTypes.BrickBlock) {
                     toDraw = imageManager.getBrickImage();
                 }
                 g.drawImage(toDraw,i*blockWidth,j*blockHeight,blockWidth,blockHeight,null);
