@@ -1,4 +1,8 @@
 package game.main;
 
-public class BlockTypes {
+ enum  BlockTypes {
+     Empty,
+     StoneBlock,
+     BrikBlock,
+     Man
 }

@@ -1,7 +1,6 @@
 package managers;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,21 +8,25 @@ import java.io.IOException;
 
 public class ImageManager {
 
-    private BufferedImage bufferedImage;
+    private BufferedImage blocks;
+    private BufferedImage man;
 
     public ImageManager() {
         try {
-            bufferedImage = ImageIO.read(new File("C:\\Users\\aidin.shahmoradi\\IdeaProjects\\BomberMan\\Resources\\BlocksImage.jpg"));
+            blocks = ImageIO.read(new File("C:\\Users\\aidin.shahmoradi\\IdeaProjects\\BomberMan\\Resources\\BlocksImage.jpg"));
+            man = ImageIO.read(new File("C:\\Users\\aidin.shahmoradi\\IdeaProjects\\BomberMan\\Resources\\man.png"));
         } catch (IOException e) {
             System.exit(1);
         }
     }
 
-    public Image getImage() {
-        return bufferedImage;
+    public Image getMan() {
+        return man;
     }
 
     public Image getStoneImage() {
-        return bufferedImage.getSubimage(168,12,26,26);
+        return blocks.getSubimage(168,12,26,26);
     }
+
+    public Image getBrickImage() {return blocks.getSubimage(118,12,26,26); }
 }
