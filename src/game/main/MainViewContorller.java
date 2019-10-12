@@ -37,10 +37,15 @@ public class MainViewContorller extends JPanel implements KeyListener {
                 Image toDraw = null;
                 if(value == BlockTypes.Man) {
                     toDraw = imageManager.getMan();
-                } else if(value == BlockTypes.StoneBlock) {
+                /*}else if(value == BlockTypes.FlippedMan) {
+                    toDraw = imageManager.getFlippedMan();*/
+                }else if(value == BlockTypes.StoneBlock) {
                     toDraw = imageManager.getStoneImage();
                 }else if(value == BlockTypes.BrickBlock) {
                     toDraw = imageManager.getBrickImage();
+                }else if (value == BlockTypes.Bomb) {
+                    toDraw = imageManager.getMan();
+                    g.drawImage(imageManager.getBombImage(),i*blockWidth,j*blockHeight,blockWidth,blockHeight,null);
                 }
                 g.drawImage(toDraw,i*blockWidth,j*blockHeight,blockWidth,blockHeight,null);
             }
@@ -66,6 +71,9 @@ public class MainViewContorller extends JPanel implements KeyListener {
         }
         if (e.getKeyCode() == 40) {
             mainGameManager.downPressed();
+        }
+        if (e.getKeyCode() == 32) {
+            mainGameManager.spacePressed();
         }
     }
 

@@ -4,5 +4,7 @@ package game.main;
      Empty,
      StoneBlock,
      BrickBlock,
-     Man
+     Man,
+     FlippedMan,
+     Bomb
 }
