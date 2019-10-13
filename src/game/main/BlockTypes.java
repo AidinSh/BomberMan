@@ -6,5 +6,6 @@ package game.main;
      BrickBlock,
      Man,
      FlippedMan,
-     Bomb
+     Bomb,
+     BombAndMan,
 }

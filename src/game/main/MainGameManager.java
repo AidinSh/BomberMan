@@ -6,51 +6,91 @@ public class MainGameManager {
     int manX = 0;
     int manY = 0;
 
+
     public void onBoardCreated() {
-        mainViewContorller.board[manX][manY] = BlockTypes.Man;
+        setBoard(manX, manY, BlockTypes.Man);
     }
 
     public void upPressed() {
-        if (manY != 0 && mainViewContorller.board[manX][manY-1] == BlockTypes.Empty) {
-            mainViewContorller.board[manX][manY] = BlockTypes.Empty;
-            manY--;
-            mainViewContorller.board[manX][manY] =BlockTypes.Man;
-
-        }
-        mainViewContorller.repaint();
+        moveManTo(manX, manY-1);
     }
 
     public void rightPressed() {
-        if (manX != 19 && mainViewContorller.board[manX+1][manY] == BlockTypes.Empty) {
-            mainViewContorller.board[manX][manY] = BlockTypes.Empty;
-            manX++;
-            mainViewContorller.board[manX][manY] = BlockTypes.Man;
-        }
-        mainViewContorller.repaint();
-
+        moveManTo(manX+1, manY);
     }
 
     public void downPressed() {
-        if (manY != 11 && mainViewContorller.board[manX][manY+1] == BlockTypes.Empty) {
-            mainViewContorller.board[manX][manY] = BlockTypes.Empty;
-            manY++;
-            mainViewContorller.board[manX][manY] = BlockTypes.Man;
-        }
-        mainViewContorller.repaint();
+        moveManTo(manX, manY + 1);
     }
 
     public void leftPressed() {
-        if (manX != 0 && mainViewContorller.board[manX-1][manY] == BlockTypes.Empty) {
-            mainViewContorller.board[manX][manY] = BlockTypes.Empty;
-            manX--;
-            mainViewContorller.board[manX][manY] = BlockTypes.Man;
+        moveManTo(manX-1, manY);
+    }
+
+    public void spacePressed() {
+        setBoard(manX, manY, BlockTypes.BombAndMan);
+        mainViewContorller.repaint();
+        new Thread(new Bomb(manX, manY)).start();
+    }
+
+    private void moveManTo(int i, int j) {
+        if (i<0 || i>19 || j<0 || j>11) {
+            return;
+        }
+        if (isTypeEqual(i, j, BlockTypes.Empty)) {
+            if (isTypeEqual(manX, manY, BlockTypes.BombAndMan)) {
+                setBoard(manX, manY, BlockTypes.Bomb);
+            }else {
+                setBoard(manX, manY, BlockTypes.Empty);
+            }
+            setBoard(i, j, BlockTypes.Man);
+            manX = i;
+            manY = j;
         }
         mainViewContorller.repaint();
     }
 
-    public void spacePressed() {
-        mainViewContorller.board[manX][manY] = BlockTypes.Bomb;
-        mainViewContorller.repaint();
+    synchronized private void setBoard(int i, int j, BlockTypes type) {
+        mainViewContorller.board[i][j] = type;
+    }
+    private BlockTypes getBoard(int i, int j) {
+        return  mainViewContorller.board[i][j];
+    }
+    private Boolean isTypeEqual(int i, int j, BlockTypes type) {
+        return  getBoard(i,j) == type;
     }
 
+    class Bomb implements Runnable {
+        int i,j;
+        Bomb(int i, int j) {
+            this.i = i;
+            this.j = j;
+        }
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(3000);
+                explodeBomb(i,j);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        private void explodeBomb(int i, int j) {
+            explodeCell(i,j);
+            explodeCell(i+1,j);
+            explodeCell(i-1,j);
+            explodeCell(i,j+1);
+            explodeCell(i,j-1);
+            mainViewContorller.repaint();
+        }
+
+        private void explodeCell(int i, int j) {
+            if (i<0 || i>19 || j<0 || j>11) {
+                return;
+            }
+            if (!isTypeEqual(i,j,BlockTypes.StoneBlock)) {
+                setBoard(i,j,BlockTypes.Empty);
+            }
+        }
+    }
 }

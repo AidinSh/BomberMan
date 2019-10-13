@@ -44,13 +44,20 @@ public class MainViewContorller extends JPanel implements KeyListener {
                 }else if(value == BlockTypes.BrickBlock) {
                     toDraw = imageManager.getBrickImage();
                 }else if (value == BlockTypes.Bomb) {
-                    toDraw = imageManager.getMan();
-                    g.drawImage(imageManager.getBombImage(),i*blockWidth,j*blockHeight,blockWidth,blockHeight,null);
+                    toDraw = imageManager.getBombImage();
+                }else if (value == BlockTypes.BombAndMan) {
+                    drawImage(imageManager.getBombImage(), g, i, j);
+                    drawImage(imageManager.getMan(), g, i, j);
+                    //continue;
                 }
-                g.drawImage(toDraw,i*blockWidth,j*blockHeight,blockWidth,blockHeight,null);
+                drawImage(toDraw, g, i, j);
             }
         }
 
+    }
+
+    private void drawImage(Image toDraw, Graphics g, int i, int j) {
+        g.drawImage(toDraw,i*blockWidth,j*blockHeight,blockWidth,blockHeight,null);
     }
 
     @Override
@@ -60,6 +67,7 @@ public class MainViewContorller extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
         if (e.getKeyCode() == 38) {
             mainGameManager.upPressed();
         }
