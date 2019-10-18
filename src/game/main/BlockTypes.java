@@ -8,4 +8,10 @@ package game.main;
      FlippedMan,
      Bomb,
      BombAndMan,
+     Explosion1,
+     Explosion2,
+     Explosion3,
+     Explosion4,
+     Explosion5,
+     Explosion6
 }

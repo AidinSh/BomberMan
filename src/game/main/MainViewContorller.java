@@ -35,20 +35,43 @@ public class MainViewContorller extends JPanel implements KeyListener {
             for(int j=0; j<board[i].length; j++) {
                 BlockTypes value = board[i][j];
                 Image toDraw = null;
-                if(value == BlockTypes.Man) {
-                    toDraw = imageManager.getMan();
-                /*}else if(value == BlockTypes.FlippedMan) {
-                    toDraw = imageManager.getFlippedMan();*/
-                }else if(value == BlockTypes.StoneBlock) {
-                    toDraw = imageManager.getStoneImage();
-                }else if(value == BlockTypes.BrickBlock) {
-                    toDraw = imageManager.getBrickImage();
-                }else if (value == BlockTypes.Bomb) {
-                    toDraw = imageManager.getBombImage();
-                }else if (value == BlockTypes.BombAndMan) {
-                    drawImage(imageManager.getBombImage(), g, i, j);
-                    drawImage(imageManager.getMan(), g, i, j);
-                    //continue;
+
+                switch (value) {
+                    case Man:
+                        toDraw = imageManager.getMan();
+                        break;
+                    case StoneBlock:
+                        toDraw = imageManager.getStoneImage();
+                        break;
+                    case BrickBlock:
+                        toDraw = imageManager.getBrickImage();
+                        break;
+                    case Bomb:
+                        toDraw = imageManager.getBombImage();
+                        break;
+                    case BombAndMan:
+                        drawImage(imageManager.getBombImage(), g, i, j);
+                        drawImage(imageManager.getMan(), g, i, j);
+                        break;
+                    case Explosion1:
+                        toDraw = imageManager.getExplosionImage(1);
+                        break;
+                    case Explosion2:
+                        toDraw = imageManager.getExplosionImage(2);
+                        break;
+                    case Explosion3:
+                        toDraw = imageManager.getExplosionImage(3);
+                        break;
+                    case Explosion4:
+                        toDraw = imageManager.getExplosionImage(4);
+                        break;
+                    case Explosion5:
+                        toDraw = imageManager.getExplosionImage(5);
+                        break;
+                    case Explosion6:
+                        toDraw = imageManager.getExplosionImage(6);
+                        break;
+
                 }
                 drawImage(toDraw, g, i, j);
             }
@@ -68,7 +91,25 @@ public class MainViewContorller extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if (e.getKeyCode() == 38) {
+        switch (e.getKeyCode()) {
+            case 32:
+                mainGameManager.spacePressed();
+                break;
+            case 37:
+                mainGameManager.leftPressed();
+                break;
+            case 38:
+                mainGameManager.upPressed();
+                break;
+            case 39:
+                mainGameManager.rightPressed();
+                break;
+            case 40:
+                mainGameManager.downPressed();
+                break;
+        }
+
+        /*if (e.getKeyCode() == 38) {
             mainGameManager.upPressed();
         }
         if (e.getKeyCode() == 39) {
@@ -82,7 +123,7 @@ public class MainViewContorller extends JPanel implements KeyListener {
         }
         if (e.getKeyCode() == 32) {
             mainGameManager.spacePressed();
-        }
+        }*/
     }
 
     @Override

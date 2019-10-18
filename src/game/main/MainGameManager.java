@@ -1,10 +1,14 @@
 package game.main;
 
+import com.sun.tools.javac.Main;
+
 public class MainGameManager {
     MainViewContorller mainViewContorller;
 
     int manX = 0;
     int manY = 0;
+    boolean isBombPlanted = false;
+    int currentPhase = 1;
 
 
     public void onBoardCreated() {
@@ -28,9 +32,12 @@ public class MainGameManager {
     }
 
     public void spacePressed() {
-        setBoard(manX, manY, BlockTypes.BombAndMan);
-        mainViewContorller.repaint();
-        new Thread(new Bomb(manX, manY)).start();
+        if (!isBombPlanted) {
+            setBoard(manX, manY, BlockTypes.BombAndMan);
+            mainViewContorller.repaint();
+            new Thread(new Bomb(manX, manY)).start();
+            isBombPlanted = true;
+        }
     }
 
     private void moveManTo(int i, int j) {
@@ -69,8 +76,9 @@ public class MainGameManager {
         @Override
         public void run() {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
                 explodeBomb(i,j);
+                isBombPlanted = false;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -84,13 +92,50 @@ public class MainGameManager {
             mainViewContorller.repaint();
         }
 
-        private void explodeCell(int i, int j) {
+        private void explodeCell (int i, int j) {
             if (i<0 || i>19 || j<0 || j>11) {
                 return;
             }
             if (!isTypeEqual(i,j,BlockTypes.StoneBlock)) {
+
+                    try {
+                        for (int x=1; x<=6; x++) {
+                            currentPhase = x;
+                            Thread.sleep(1000 / 6);
+                            setBoard(i, j, explosionAnimator(x));
+                            mainViewContorller.repaint();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 setBoard(i,j,BlockTypes.Empty);
             }
         }
+
+        private BlockTypes explosionAnimator(int phase) {
+            BlockTypes currentPhase = null;
+            switch (phase) {
+                case 1:
+                    currentPhase =  BlockTypes.Explosion1;
+                    break;
+                case 2:
+                    currentPhase =  BlockTypes.Explosion2;
+                    break;
+                case 3:
+                    currentPhase =  BlockTypes.Explosion3;
+                    break;
+                case 4:
+                    currentPhase =  BlockTypes.Explosion4;
+                    break;
+                case 5:
+                    currentPhase =  BlockTypes.Explosion5;
+                    break;
+                case 6:
+                    currentPhase =  BlockTypes.Explosion6;
+                    break;
+            }
+            return  currentPhase;
+        }
     }
-}
+
