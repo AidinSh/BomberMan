@@ -1,8 +1,8 @@
-import game.main.mainViewContorller;
+import game.main.MainViewController;
 
 public class Main {
     public static void main(String[] args) {
-        mainViewContorller mainViewContorller = new mainViewContorller(12,20);
+        MainViewController mainViewContorller = new MainViewController(12,19);
 
     }
 }

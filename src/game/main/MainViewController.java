@@ -1,14 +1,12 @@
 package game.main;
 
 import managers.ImageManager;
-import sun.applet.Main;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class mainViewContorller extends JPanel implements KeyListener {
+public class MainViewController extends JPanel implements KeyListener {
     private static final int blockWidth = 50;
     private static final int blockHeight = 50;
     BlockTypes [][] board;
@@ -16,7 +14,7 @@ public class mainViewContorller extends JPanel implements KeyListener {
     MainGameManager mainGameManager = new MainGameManager();
     MapProvider mapProvider = new MapProvider();
 
-    public mainViewContorller(int row, int column) {
+    public MainViewController(int row, int column) {
         JFrame jFrame = new JFrame();
         jFrame.setSize(column * blockWidth + 20, row * blockHeight + 40);
         jFrame.add(this);
@@ -25,8 +23,9 @@ public class mainViewContorller extends JPanel implements KeyListener {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.addKeyListener(this);
         board = mapProvider.mapBuilder(row, column);
-        mainGameManager.mainViewContorller = this;
-        mainGameManager.onBoardCreated();
+        mainGameManager.mainViewController = this;
+        mainGameManager.player1.onBoardCreated();
+        mainGameManager.player2.onBoardCreated();
     }
 
     public void showGameOverMessage() {
@@ -97,20 +96,35 @@ public class mainViewContorller extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         switch (e.getKeyCode()) {
+            case 65:
+                mainGameManager.player1.leftPressed();
+                break;
+            case 87:
+                mainGameManager.player1.upPressed();
+                break;
+            case 68:
+                mainGameManager.player1.rightPressed();
+                break;
+            case 83:
+                mainGameManager.player1.downPressed();
+                break;
             case 32:
-                mainGameManager.spacePressed();
+                mainGameManager.player1.bombPressed();
+                break;
+            case 10:
+                mainGameManager.player2.bombPressed();
                 break;
             case 37:
-                mainGameManager.leftPressed();
+                mainGameManager.player2.leftPressed();
                 break;
             case 38:
-                mainGameManager.upPressed();
+                mainGameManager.player2.upPressed();
                 break;
             case 39:
-                mainGameManager.rightPressed();
+                mainGameManager.player2.rightPressed();
                 break;
             case 40:
-                mainGameManager.downPressed();
+                mainGameManager.player2.downPressed();
                 break;
         }
 

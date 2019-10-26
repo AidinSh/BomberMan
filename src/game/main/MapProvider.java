@@ -29,6 +29,9 @@ public class MapProvider {
                 }
             }
         }
+
+        board[column-1][1] = BlockTypes.Empty;
+        board[column-1][2] = BlockTypes.Empty;
         return board;
     }
 

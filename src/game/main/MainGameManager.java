@@ -2,50 +2,20 @@ package game.main;
 
 
 public class MainGameManager {
-    game.main.mainViewContorller mainViewContorller;
+    MainViewController mainViewController;
 
-    Player player1 = new Player();
-    int manX = 0;
-    int manY = 0;
+    Player player1 = new Player(0,0);
+    Player player2 = new Player(18,0);
     boolean isBombPlanted = false;
     int currentPhase = 1;
     boolean isManDead = false;
 
 
-    public void onBoardCreated() {
-        setBoard(manX, manY, BlockTypes.Man);
-    }
-
-    public void upPressed() {
-        player1.moveManTo(manX, manY-1);
-    }
-
-    public void rightPressed() {
-        player1.moveManTo(manX+1, manY);
-    }
-
-    public void downPressed() {
-        player1.moveManTo(manX, manY + 1);
-    }
-
-    public void leftPressed() {
-        player1.moveManTo(manX-1, manY);
-    }
-
-    public void spacePressed() {
-        if (!isBombPlanted) {
-            setBoard(manX, manY, BlockTypes.BombAndMan);
-            mainViewContorller.repaint();
-            new Thread(new Bomb(manX, manY)).start();
-            isBombPlanted = true;
-        }
-    }
-
     synchronized private void setBoard(int i, int j, BlockTypes type) {
-        mainViewContorller.board[i][j] = type;
+        mainViewController.board[i][j] = type;
     }
     private BlockTypes getBoard(int i, int j) {
-        return  mainViewContorller.board[i][j];
+        return  mainViewController.board[i][j];
     }
     private Boolean isTypeEqual(int i, int j, BlockTypes type) {
         return  getBoard(i,j) == type;
@@ -88,7 +58,7 @@ public class MainGameManager {
                 }
 
                 if(isManDead) {
-                    mainViewContorller.showGameOverMessage();
+                    mainViewController.showGameOverMessage();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -96,7 +66,7 @@ public class MainGameManager {
         }
 
         private void explodeCell(int i, int j, int phase) {
-            if (i < 0 || i > 19 || j < 0 || j > 11) {
+            if (i < 0 || i > 18 || j < 0 || j > 11) {
                 return;
             }
             if (!isTypeEqual(i, j, BlockTypes.StoneBlock)) {
@@ -104,27 +74,61 @@ public class MainGameManager {
                      isManDead = true;
                 }
                 setBoard(i, j, explosionAnimator(phase));
-                mainViewContorller.repaint();
+                mainViewController.repaint();
                 }
             }
 
         private void setCellEmpty(int i, int j) {
-            if (i < 0 || i > 19 || j < 0 || j > 11) {
+            if (i < 0 || i > 18 || j < 0 || j > 11) {
                 return;
             }
             if (!isTypeEqual(i, j, BlockTypes.StoneBlock)) {
                 setBoard(i, j, BlockTypes.Empty);
-                mainViewContorller.repaint();
+                mainViewController.repaint();
             }
         }
 
     }
 
     class Player {
+        int manX,manY;
+
+        Player(int playerX, int playerY){
+            manX = playerX;
+            manY = playerY;
+        }
+        public void onBoardCreated() {
+            setBoard(manX, manY, BlockTypes.Man);
+        }
+
+        public void upPressed() {
+            moveManTo(manX, manY-1);
+        }
+
+        public void rightPressed() {
+            moveManTo(manX+1, manY);
+        }
+
+        public void downPressed() {
+            moveManTo(manX, manY + 1);
+        }
+
+        public void leftPressed() {
+            moveManTo(manX-1, manY);
+        }
+
+        public void bombPressed() {
+            if (!isBombPlanted) {
+                setBoard(manX, manY, BlockTypes.BombAndMan);
+                mainViewController.repaint();
+                new Thread(new Bomb(manX, manY)).start();
+                isBombPlanted = true;
+            }
+        }
 
         private void moveManTo(int i, int j) {
             if (!isManDead) {
-                if (i < 0 || i > 19 || j < 0 || j > 11) {
+                if (i < 0 || i > 18 || j < 0 || j > 11) {
                     return;
                 }
                 if (isTypeEqual(i, j, BlockTypes.Empty)) {
@@ -137,11 +141,12 @@ public class MainGameManager {
                     manX = i;
                     manY = j;
                 }
-                mainViewContorller.repaint();
+                mainViewController.repaint();
             }
         }
-
     }
+
+
 
     private BlockTypes explosionAnimator(int phase) {
         BlockTypes currentPhase = null;
