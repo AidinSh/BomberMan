@@ -1,13 +1,14 @@
 package game.main;
 
 import managers.ImageManager;
+import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class MainViewContorller extends JPanel implements KeyListener {
+public class mainViewContorller extends JPanel implements KeyListener {
     private static final int blockWidth = 50;
     private static final int blockHeight = 50;
     BlockTypes [][] board;
@@ -15,7 +16,7 @@ public class MainViewContorller extends JPanel implements KeyListener {
     MainGameManager mainGameManager = new MainGameManager();
     MapProvider mapProvider = new MapProvider();
 
-    public MainViewContorller(int row, int column) {
+    public mainViewContorller(int row, int column) {
         JFrame jFrame = new JFrame();
         jFrame.setSize(column * blockWidth + 20, row * blockHeight + 40);
         jFrame.add(this);
@@ -26,6 +27,10 @@ public class MainViewContorller extends JPanel implements KeyListener {
         board = mapProvider.mapBuilder(row, column);
         mainGameManager.mainViewContorller = this;
         mainGameManager.onBoardCreated();
+    }
+
+    public void showGameOverMessage() {
+        JOptionPane.showMessageDialog(null,"You Loss Retard !");
     }
 
     @Override
@@ -54,22 +59,22 @@ public class MainViewContorller extends JPanel implements KeyListener {
                         drawImage(imageManager.getMan(), g, i, j);
                         break;
                     case Explosion1:
-                        toDraw = imageManager.getExplosionImage(1);
+                        toDraw = imageManager.getExplosionImage(0);
                         break;
                     case Explosion2:
-                        toDraw = imageManager.getExplosionImage(2);
+                        toDraw = imageManager.getExplosionImage(1);
                         break;
                     case Explosion3:
-                        toDraw = imageManager.getExplosionImage(3);
+                        toDraw = imageManager.getExplosionImage(2);
                         break;
                     case Explosion4:
-                        toDraw = imageManager.getExplosionImage(4);
+                        toDraw = imageManager.getExplosionImage(3);
                         break;
                     case Explosion5:
-                        toDraw = imageManager.getExplosionImage(5);
+                        toDraw = imageManager.getExplosionImage(4);
                         break;
                     case Explosion6:
-                        toDraw = imageManager.getExplosionImage(6);
+                        toDraw = imageManager.getExplosionImage(5);
                         break;
 
                 }
@@ -109,21 +114,6 @@ public class MainViewContorller extends JPanel implements KeyListener {
                 break;
         }
 
-        /*if (e.getKeyCode() == 38) {
-            mainGameManager.upPressed();
-        }
-        if (e.getKeyCode() == 39) {
-            mainGameManager.rightPressed();
-        }
-        if (e.getKeyCode() == 37) {
-            mainGameManager.leftPressed();
-        }
-        if (e.getKeyCode() == 40) {
-            mainGameManager.downPressed();
-        }
-        if (e.getKeyCode() == 32) {
-            mainGameManager.spacePressed();
-        }*/
     }
 
     @Override

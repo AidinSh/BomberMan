@@ -49,27 +49,15 @@ public class ImageManager {
     }
 
     public Image getExplosionImage(int phase) {
-        Image currentExplosionImage = null;
-        switch (phase) {
-            case 1:
-                currentExplosionImage = explosion.getSubimage(0, 0, 70, 70);
-            case 2:
-                currentExplosionImage = explosion.getSubimage(70, 0, 70, 70);
-            case 3:
-                currentExplosionImage = explosion.getSubimage(140, 0, 70, 70);
-            case 4:
-                currentExplosionImage = explosion.getSubimage(210, 0, 70, 70);
-            case 5:
-                currentExplosionImage = explosion.getSubimage(0, 70, 70, 70);
-            case 6:
-                currentExplosionImage = explosion.getSubimage(70, 70, 70, 70);
-        }
-        return currentExplosionImage;
+        Image[] currentExplosionImage = new Image[6];
+
+        currentExplosionImage[0] = explosion.getSubimage(0, 0, 70, 70);
+        currentExplosionImage[1] = explosion.getSubimage(70, 0, 70, 70);
+        currentExplosionImage[2] = explosion.getSubimage(140, 0, 70, 70);
+        currentExplosionImage[3] = explosion.getSubimage(210, 0, 70, 70);
+        currentExplosionImage[4] = explosion.getSubimage(0, 70, 70, 70);
+        currentExplosionImage[5] = explosion.getSubimage(70, 70, 70, 70);
+
+        return currentExplosionImage[phase];
     }
-        //return explosion.getSubimage(0,0,70,70);
-    /*public Image getExplosionImage2() { return explosion.getSubimage(70,0,70,70);}
-    public Image getExplosionImage3() { return explosion.getSubimage(140,0,70,70);}
-    public Image getExplosionImage4() { return explosion.getSubimage(210,0,70,70);}
-    public Image getExplosionImage5() { return explosion.getSubimage(0,70,70,70);}
-    public Image getExplosionImage6() { return explosion.getSubimage(70,70,70,70);}*/
 }

@@ -1,10 +1,8 @@
-import game.main.MainViewContorller;
-
-import javax.swing.*;
+import game.main.mainViewContorller;
 
 public class Main {
     public static void main(String[] args) {
-        MainViewContorller mainViewContorller = new MainViewContorller(12,20);
+        mainViewContorller mainViewContorller = new mainViewContorller(12,20);
 
     }
 }
