@@ -9,6 +9,8 @@ public class MainGameManager {
     boolean isBombPlanted = false;
     int currentPhase = 1;
     boolean isManDead = false;
+    int doorX = 0;
+    int doorY = 0;
 
 
     synchronized private void setBoard(int i, int j, BlockTypes type) {
@@ -42,7 +44,7 @@ public class MainGameManager {
 
         private void explodeBomb(int i, int j) {
             try {
-                int iArray[]=  {i, i+1, i-1 ,i, i};
+                int iArray[]=  {i, i+1, i-1, i, i};
                 int jArray[]=  {j, j, j, j+1 ,j-1};
 
                 for (int x = 1; x <= 6; x++) {
@@ -71,7 +73,11 @@ public class MainGameManager {
             }
             if (!isTypeEqual(i, j, BlockTypes.StoneBlock)) {
                 if (isTypeEqual(i, j, BlockTypes.Man) || isTypeEqual(i, j, BlockTypes.BombAndMan)) {
-                     isManDead = true;
+                    isManDead = true;
+                }
+                if (isTypeEqual(i, j, BlockTypes.DoorAndBrick)) {
+                    doorX = i;
+                    doorY = j;
                 }
                 setBoard(i, j, explosionAnimator(phase));
                 mainViewController.repaint();
@@ -84,6 +90,9 @@ public class MainGameManager {
             }
             if (!isTypeEqual(i, j, BlockTypes.StoneBlock)) {
                 setBoard(i, j, BlockTypes.Empty);
+                if (i == doorX && j == doorY) {
+                    setBoard(i, j, BlockTypes.Door);
+                }
                 mainViewController.repaint();
             }
         }

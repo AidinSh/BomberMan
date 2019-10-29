@@ -14,5 +14,7 @@ package game.main;
      Explosion4,
      Explosion5,
      Explosion6,
+     DoorAndBrick,
+     Door,
 
 }

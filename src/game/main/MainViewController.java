@@ -57,6 +57,12 @@ public class MainViewController extends JPanel implements KeyListener {
                         drawImage(imageManager.getBombImage(), g, i, j);
                         drawImage(imageManager.getMan(), g, i, j);
                         break;
+                    case DoorAndBrick:
+                        toDraw = imageManager.getBrickImage();
+                        break;
+                    case Door:
+                        toDraw = imageManager.getDoorImage();
+                        break;
                     case Explosion1:
                         toDraw = imageManager.getExplosionImage(0);
                         break;

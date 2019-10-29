@@ -12,6 +12,7 @@ public class ImageManager {
     private BufferedImage man;
     private BufferedImage bomb;
     private BufferedImage explosion;
+    private BufferedImage door;
 
 
     public ImageManager() {
@@ -22,6 +23,7 @@ public class ImageManager {
             man = ImageIO.read(new File(userDir + "\\Resources\\man.png"));
             bomb = ImageIO.read(new File(userDir + "\\Resources\\Bomb.png"));
             explosion = ImageIO.read(new File(userDir + "\\Resources\\Explosion.png"));
+            door = ImageIO.read(new File(userDir + "\\Resources\\Door.png"));
 
         } catch (IOException e) {
             System.exit(1);
@@ -32,9 +34,9 @@ public class ImageManager {
         return man;
     }
 
-    /*public Image getFlippedMan() {
-        return man.getScaledInstance(-1,1,0);
-    }*/
+    public Image getDoorImage() {
+        return door;
+    }
 
     public Image getStoneImage() {
         return blocks.getSubimage(168,12,26,26);
