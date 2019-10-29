@@ -36,8 +36,8 @@ public class MapProvider {
         int doorX = 0;
         int doorY = 0;
         while (board[doorX][doorY] != BlockTypes.BrickBlock) {
-            doorX = (int)(Math.random()*18+1);
-            doorY = (int)(Math.random()*12+1);
+            doorX = (int)(Math.random()*17+1);
+            doorY = (int)(Math.random()*11+1);
         }
         board[doorX][doorY] = BlockTypes.DoorAndBrick;
 

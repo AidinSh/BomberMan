@@ -32,6 +32,10 @@ public class MainViewController extends JPanel implements KeyListener {
         JOptionPane.showMessageDialog(null,"You Loss Retard !");
     }
 
+    public void showWinMessage() {
+        JOptionPane.showMessageDialog(null,"Congrats !!! \n You Won !");
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

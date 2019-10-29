@@ -4,8 +4,8 @@ package game.main;
 public class MainGameManager {
     MainViewController mainViewController;
 
-    Player player1 = new Player(0,0);
-    Player player2 = new Player(18,0);
+    Player player1 = new Player(0,0, "Player1");
+    Player player2 = new Player(18,0, "Player2");
     boolean isBombPlanted = false;
     int currentPhase = 1;
     boolean isManDead = false;
@@ -101,8 +101,10 @@ public class MainGameManager {
 
     class Player {
         int manX,manY;
+        String name = "";
 
-        Player(int playerX, int playerY){
+        Player(int playerX, int playerY, String name){
+            name = this.name;
             manX = playerX;
             manY = playerY;
         }
@@ -149,6 +151,9 @@ public class MainGameManager {
                     setBoard(i, j, BlockTypes.Man);
                     manX = i;
                     manY = j;
+                }
+                if (isTypeEqual(i, j, BlockTypes.Door)) {
+                    mainViewController.showWinMessage();
                 }
                 mainViewController.repaint();
             }
